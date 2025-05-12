@@ -78,3 +78,6 @@ python (INSERT CODE PATHNAME HERE!!!)/copy_to_drumlogue.py (INSERT SAMPLES PATHN
 
 ## 6.
 You survived!  Press *play* on the drumlogue and have fun!
+
+## Final Notes
+This code is slightly customizable too.  If you open organize_samples.py with any text editor (like your notes app), you'll see something up at the top called *SPECIAL_ORDER*.  Any filenames you put in that list will be the first user samples on your drumlogue.  Mine are sub.wav and sub_kick.wav, but if you put your own in there it will work!

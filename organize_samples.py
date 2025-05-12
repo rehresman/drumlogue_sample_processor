@@ -19,6 +19,7 @@ def get_total_folder_size(folder):
     )
 
 def main():
+    numWavFiles = 0
     if len(sys.argv) != 2:
         print("Usage: python3 organize_samples.py /path/to/folder")
         sys.exit(1)
@@ -27,6 +28,14 @@ def main():
 
     if not os.path.isdir(folder):
         print(f"❌ Error: '{folder}' is not a valid directory.")
+        sys.exit(1)
+
+    # Step 0: Sanity check: make sure there's at least one .wav file
+    for f in os.listdir(folder):
+        if is_wav_file(f):
+            numWavFiles += 1
+    if numWavFiles == 0:
+        print("❌ Error: No .wav files found in the target directory! Please check the samples pathname.")
         sys.exit(1)
 
     # Step 1: Remove non-wav and hidden files
@@ -49,7 +58,7 @@ def main():
     total_size = sum(size for _, size in file_sizes)
     if total_size > MAX_SIZE_MB * 1024 * 1024:
         top_files = sorted(file_sizes, key=lambda x: x[1], reverse=True)[:5]
-        print(f"❌ Error: Total size is {total_size / (1024 * 1024):.2f} MB. Limit is {MAX_SIZE_MB} MB.")
+        print(f"❌ Error: Total size is {total_size / (1024 * 1024):.2f} MB. The official limit is {MAX_SIZE_MB} MB, but in practice, it may be more like {MAX_SIZE_MB - 1}.")
         print("Top 5 largest files:")
         for fname, size in top_files:
             print(f"  {fname}: {size / 1024:.2f} KB")
